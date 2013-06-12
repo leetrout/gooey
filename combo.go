@@ -8,7 +8,7 @@ import (
     "net/http"
     "net/url"
     "os"
-    "path/filepath"
+    "strings"
 )
 
 var js_root string  // path to js files
@@ -23,7 +23,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
         if v[0] == "" {
             // just a key, e.g. ?foo&bar&baz
             // assume filename and append path
-            file := js_root + filepath.Base(k)
+            file := js_root + strings.Replace(k, "../", "", -1)
             files = append(files, file)
         }
         // else this has a value, e.g. ?foo=bar
